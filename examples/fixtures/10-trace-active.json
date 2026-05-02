@@ -1,0 +1,17 @@
+{
+  "model": {
+    "display_name": "Sonnet 4.6",
+    "id": "claude-sonnet-4-6"
+  },
+  "session_id": "e2e-trace-active",
+  "context_window": {
+    "used_percentage": 20,
+    "context_window_size": 200000,
+    "tokens_used": 40000
+  },
+  "cost": {
+    "total_cost_usd": 0.50,
+    "total_duration_ms": 120000
+  },
+  "state": "idle"
+}

@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Internal dev session notes
+HANDOFF-*.md
+
+# Design working files
+Design examples/
+
+# Spec / working documents — kept locally, not published
+Claude_Code_Clarity_Spec_v1.md
+DOCS-STATUSLINE-REF.md

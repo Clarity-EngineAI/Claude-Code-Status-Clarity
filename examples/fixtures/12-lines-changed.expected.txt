@@ -1,0 +1,2 @@
+< > Claude Sonnet 4.6  |  ####------ 35%  |  $0.42  |  2m0s
+/main  |  +150/-30  |  my-project

@@ -1,0 +1,27 @@
+{
+  "model": {
+    "display_name": "Sonnet 4.6",
+    "id": "claude-sonnet-4-6"
+  },
+  "session_id": "e2e-lines-changed",
+  "context_window": {
+    "used_percentage": 35,
+    "context_window_size": 200000,
+    "tokens_used": 70000
+  },
+  "cost": {
+    "total_cost_usd": 0.42,
+    "total_duration_ms": 120000,
+    "total_lines_added": 150,
+    "total_lines_removed": 30,
+    "total_input_tokens": 500,
+    "total_output_tokens": 200
+  },
+  "workspace": {
+    "current_dir": "/Users/admin/my-project"
+  },
+  "worktree": {
+    "branch": "main"
+  },
+  "state": "idle"
+}
