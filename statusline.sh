@@ -466,8 +466,22 @@ build_bar_section() {
     warn=" ${COLOUR_YELLOW}${warn_glyph}${COLOUR_RESET}"
   fi
 
-  # Order: bar pct% warn ctx_size  (glyph before context size, matching design)
-  printf '%s %s%s%s' "$bar" "$pct_display" "$warn" "$ctx_size"
+  # Compact token count: 420000 → 420k, 1200000 → 1.2M
+  local tok_display=""
+  if [ "${CTX_TOKENS_USED:-0}" -gt 0 ] 2>/dev/null; then
+    local t="$CTX_TOKENS_USED"
+    if [ "$t" -ge 1000000 ]; then
+      tok_display=" $(awk -v t="$t" 'BEGIN { printf "%.1fM", t/1000000 }')"
+    elif [ "$t" -ge 1000 ]; then
+      tok_display=" $((t / 1000))k"
+    else
+      tok_display=" ${t}"
+    fi
+    tok_display="${COLOUR_FAINT}${tok_display}${COLOUR_RESET}"
+  fi
+
+  # Order: bar pct% tokens warn ctx_size
+  printf '%s %s%s%s%s' "$bar" "$pct_display" "$tok_display" "$warn" "$ctx_size"
 }
 
 build_state_glyph() {
@@ -571,6 +585,23 @@ build_cost_and_burn() {
   else
     printf '%s$%s%s' "$arrow" "$cost" "$rate_str"
   fi
+}
+
+build_session_tokens() {
+  local total
+  total=$(( ${COST_INPUT_TOKENS:-0} + ${COST_OUTPUT_TOKENS:-0} ))
+  [ "$total" -le 0 ] 2>/dev/null && return 0
+
+  local display
+  if [ "$total" -ge 1000000 ]; then
+    display="$(awk -v t="$total" 'BEGIN { printf "%.1fM tok", t/1000000 }')"
+  elif [ "$total" -ge 1000 ]; then
+    display="$((total / 1000))k tok"
+  else
+    display="${total} tok"
+  fi
+
+  printf '%s%s%s' "$COLOUR_FAINT" "$display" "$COLOUR_RESET"
 }
 
 build_duration() {
@@ -894,10 +925,11 @@ main() {
   compute_burn_rate_and_velocity
 
   # Line 1 pieces
-  local line1_bar line1_state line1_cost line1_dur line1_rate
+  local line1_bar line1_state line1_cost line1_tokens line1_dur line1_rate
   line1_bar="$(safe_section build_bar_section)"
   line1_state="$(safe_section build_state_glyph)"
   line1_cost="$(safe_section build_cost_and_burn)"
+  line1_tokens="$(safe_section build_session_tokens)"
   line1_dur="$(safe_section build_duration)"
   line1_rate="$(safe_section build_rate_limits)"
 
@@ -918,7 +950,9 @@ main() {
   [ "${FAST_MODE:-0}" = "1" ] && fast_badge=" ${COLOUR_ACCENT}fast${COLOUR_RESET}"
 
   local line1
-  line1="${line1_state} ${model_coloured}${fast_badge}${sep}${line1_bar}${sep}${line1_cost}${sep}${line1_dur}"
+  line1="${line1_state} ${model_coloured}${fast_badge}${sep}${line1_bar}${sep}${line1_cost}"
+  [ -n "$line1_tokens" ] && line1="${line1}${sep}${line1_tokens}"
+  line1="${line1}${sep}${line1_dur}"
   [ -n "$line1_rate" ] && line1="${line1}${sep}${line1_rate}"
 
   # Line 2

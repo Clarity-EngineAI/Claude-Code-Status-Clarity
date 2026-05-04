@@ -1,2 +1,2 @@
-< > Claude Opus 4.7  |  ########-- 75% 1M  |  $1.23  |  10m0s
+< > Claude Opus 4.7  |  ########-- 75% 750k 1M  |  $1.23  |  1k tok  |  10m0s
 /(no-branch)  |  .

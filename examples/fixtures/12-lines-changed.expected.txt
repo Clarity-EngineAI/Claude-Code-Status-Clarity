@@ -1,2 +1,2 @@
-< > Claude Sonnet 4.6  |  ####------ 35%  |  $0.42  |  2m0s
+< > Claude Sonnet 4.6  |  ####------ 35% 70k  |  $0.42  |  700 tok  |  2m0s
 /main  |  +150/-30  |  my-project

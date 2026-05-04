@@ -1,2 +1,2 @@
-< > Claude Sonnet 4.6  |  ##-------- 20%  |  $0.50  |  2m0s  |  ^85% · resets 1h 30m
+< > Claude Sonnet 4.6  |  ##-------- 20% 40k  |  $0.50  |  2m0s  |  ^85% · resets 1h 30m
 /(no-branch)  |  .
